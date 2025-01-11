@@ -62,7 +62,7 @@ VALUES
 SELECT Company_name, industry,paid_time_off_days,
 
 CASE 
-	WHEN paid_time_off_days =15 THEN 'too short'
+    WHEN paid_time_off_days =15 THEN 'too short'
     WHEN paid_time_off_days = 18 THEN 'average'
     WHEN Paid_time_off_days >=20 THEN  'long vocation'
     else 'normal'

@@ -22,7 +22,7 @@ duration_ms integer NOT NULL,
 time_signature integer NOT NULL );
 
 
- 
+--List each track name with its popularity score, and show the average popularity across all records in the dataset
 
 SELECT track_name, popularity, AVG(popularity) AS Allavgpopularity
 FROM BIT_DB.Spotifydata
@@ -30,15 +30,20 @@ GROUP BY track_name, popularity
 ORDER BY 1,2;
 
 
+--Retrieve the artist name and track name along with the highest recorded values for popularity, energy, and liveness for each track
 
 SELECT artist_name, track_name, MAX(popularity), MAX(energy), MAX(liveness)
 FROM BIT_DB.Spotifydata
 ORDER BY 1,2,3;
 
+
+--Retrieve the track name and popularity for a limited set of 7 artists, grouping the data by artist name
 SELECT track_name, popularity
 FROM BIT_DB.spotifydata
 GROUP BY artist_name 
 LIMIT 7;
+
+--What are the average loudness, valence, and tempo values for each artist, ordered by track ID
 
 SELECT artist_name
 ,AVG(loudness)
@@ -47,32 +52,40 @@ SELECT artist_name
 FROM BIT_DB.spotifydata
 ORDER BY track_id ASC;
 
+--What is the total popularity of the track with ID equal to 4, ordered by track ID
 SELECT SUM(popularity)
 FROM BIT_DB.spotifydata
 WHERE id= 4
 ORDER BY track_id;
 
+--For each artist, how many entries with popularity values exist in the Spotify dataset
+
 SELECT COUNT(popularity)
 FROM BIT_DB.Spotifydata
 GROUP BY artist_name;
 
+
+
+--Calculate the difference between the highest and average popularity scores for tracks by artists whose names include the letter 'D
 SELECT MAX(popularity)-AVG(popularity)
 FROM BIT_DB.spotifydata
 WHERE artist_name LIKE'%D%';
 
 
+--Display each track's name and popularity, and include the overall average popularity calculated across the entire dataset
 
 SELECT track_name, popularity,(SELECT Avg (popularity)
 FROM BIT_DB.spotifydata) 
 FROM BIT_DB.spotifydata;
 
-
+--How many times does each track appear in the dataset, along with its name and popularity score
 
 SELECT track_name, popularity,COUNT(*)
 FROM BIT_DB.Spotifydata
 GROUP BY track_name;
 
 
+-- Show each track based on its popularity score into categories such as 'above', 'above average', 'average', or 'below average
 
 SELECT popularity,
 CASE 
